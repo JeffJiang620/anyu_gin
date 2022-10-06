@@ -39,9 +39,7 @@ func (server *Server) Start(addr ...string) error {
 	return nil
 }
 
-func (server *Server) Stop() error {
-	return nil
-}
+func (server *Server) Stop() {}
 
 func (server *Server) WithOption(opts ...Option) (*Server, error) {
 	if server.engine == nil {
