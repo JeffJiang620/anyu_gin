@@ -3,16 +3,11 @@ package server
 import "github.com/gin-gonic/gin"
 
 type Server struct {
-	mode   string
 	engine *gin.Engine
 }
 
 func (server *Server) Engine() *gin.Engine {
 	return server.engine
-}
-
-func (server *Server) Mode() string {
-	return server.mode
 }
 
 func (server *Server) Start(addr ...string) error {

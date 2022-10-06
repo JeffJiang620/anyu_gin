@@ -42,8 +42,6 @@ func (opt Mode) Apply(server *Server) error {
 	if !checkModeSupported(sMode) {
 		return errNotSupportedMode
 	}
-
-	server.mode = sMode
 	gin.SetMode(sMode)
 	return nil
 }
@@ -113,25 +111,25 @@ func checkLocaleSupported(locale string) bool {
 }
 
 type Validators struct {
-	locale     string
-	validators []validators.Validator
+	Locale     string
+	Validators []validators.Validator
 }
 
 func (opt Validators) Apply(server *Server) error {
-	if !checkLocaleSupported(opt.locale) {
+	if !checkLocaleSupported(opt.Locale) {
 		return errNotSupportedLocale
 	}
 
-	return validators.RegisterValidator(opt.locale, opt.validators...)
+	return validators.RegisterValidator(opt.Locale, opt.Validators...)
 }
 
 type Routers struct {
-	base    string
-	routers []routers.Router
+	Base    string
+	Routers []routers.Router
 }
 
 func (opt Routers) Apply(server *Server) error {
-	routers.CombineRouters(server.engine, opt.base, opt.routers...)
+	routers.CombineRouters(server.engine, opt.Base, opt.Routers...)
 	return nil
 }
 
