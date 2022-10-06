@@ -1,12 +1,13 @@
 package response
 
 import (
-	"github.com/JeffJiang620/anyu_gin/renders"
-	"github.com/JeffJiang620/anyu_gin/trans"
-	"github.com/JeffJiang620/anyu_stack_err/stackErr"
+	"net/http"
+
+	"github.com/anyufly/gin_common/renders"
+	"github.com/anyufly/gin_common/trans"
+	"github.com/anyufly/stack_err/stackErr"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"net/http"
 )
 
 type errorResponse struct {

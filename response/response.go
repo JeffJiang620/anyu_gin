@@ -1,9 +1,10 @@
 package response
 
 import (
-	"github.com/JeffJiang620/anyu_gin/renders"
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/anyufly/gin_common/renders"
+	"github.com/gin-gonic/gin"
 )
 
 type Response struct {

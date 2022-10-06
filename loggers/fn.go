@@ -2,8 +2,9 @@ package loggers
 
 import (
 	"fmt"
-	"github.com/JeffJiang620/anyu_logger/loggers"
-	"github.com/JeffJiang620/anyu_stack_err/stackErr"
+
+	"github.com/anyufly/logger/loggers"
+	"github.com/anyufly/stack_err/stackErr"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )

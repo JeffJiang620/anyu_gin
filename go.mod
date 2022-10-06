@@ -1,15 +1,19 @@
-module github.com/JeffJiang620/anyu_gin
+module github.com/anyufly/gin_common
 
 go 1.19
 
 require (
-	github.com/JeffJiang620/anyu_logger v0.0.0-20221003073101-a48490362747 // indirect
-	github.com/JeffJiang620/anyu_stack_err v0.0.0-20221003140545-a11b4eee9380 // indirect
+	github.com/anyufly/logger v0.0.0-20221006043711-4c117a92ced9
+	github.com/anyufly/stack_err v0.0.0-20221006043430-89c439669fbc
+	github.com/gin-gonic/gin v1.8.1
+	github.com/go-playground/locales v0.14.0
+	github.com/go-playground/universal-translator v0.18.0
+	github.com/go-playground/validator/v10 v10.11.1
+	go.uber.org/zap v1.23.0
+)
+
+require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
-	github.com/gin-gonic/gin v1.8.1 // indirect
-	github.com/go-playground/locales v0.14.0 // indirect
-	github.com/go-playground/universal-translator v0.18.0 // indirect
-	github.com/go-playground/validator/v10 v10.11.1 // indirect
 	github.com/goccy/go-json v0.9.11 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
@@ -20,7 +24,6 @@ require (
 	github.com/ugorji/go/codec v1.2.7 // indirect
 	go.uber.org/atomic v1.10.0 // indirect
 	go.uber.org/multierr v1.8.0 // indirect
-	go.uber.org/zap v1.23.0 // indirect
 	golang.org/x/crypto v0.0.0-20220926161630-eccd6366d1be // indirect
 	golang.org/x/net v0.0.0-20221002022538-bcab6841153b // indirect
 	golang.org/x/sys v0.0.0-20220928140112-f11e5e49a4ec // indirect

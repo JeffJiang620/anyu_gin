@@ -2,10 +2,11 @@ package loggers
 
 import (
 	"fmt"
-	"github.com/JeffJiang620/anyu_logger/loggers"
+	"time"
+
+	"github.com/anyufly/logger/loggers"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"time"
 )
 
 type LoggerConfig struct {

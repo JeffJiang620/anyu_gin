@@ -2,7 +2,10 @@ package validators
 
 import (
 	"fmt"
-	"github.com/JeffJiang620/anyu_gin/trans"
+	"reflect"
+	"strings"
+
+	"github.com/anyufly/gin_common/trans"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/locales/en"
 	"github.com/go-playground/locales/zh"
@@ -10,8 +13,6 @@ import (
 	"github.com/go-playground/validator/v10"
 	enTrans "github.com/go-playground/validator/v10/translations/en"
 	zhTrans "github.com/go-playground/validator/v10/translations/zh"
-	"reflect"
-	"strings"
 )
 
 type Validator interface {

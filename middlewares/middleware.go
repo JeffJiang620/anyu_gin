@@ -2,9 +2,10 @@ package middlewares
 
 import (
 	"errors"
-	"github.com/JeffJiang620/anyu_gin/loggers"
-	"github.com/JeffJiang620/anyu_gin/renders"
-	"github.com/JeffJiang620/anyu_gin/response"
+
+	"github.com/anyufly/gin_common/loggers"
+	"github.com/anyufly/gin_common/renders"
+	"github.com/anyufly/gin_common/response"
 	"github.com/gin-gonic/gin"
 )
 

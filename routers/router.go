@@ -2,12 +2,13 @@ package routers
 
 import (
 	"context"
-	"github.com/JeffJiang620/anyu_gin/controllers"
-	"github.com/JeffJiang620/anyu_gin/middlewares"
-	"github.com/gin-gonic/gin"
 	"path"
 	"strings"
 	"unsafe"
+
+	"github.com/anyufly/gin_common/controllers"
+	"github.com/anyufly/gin_common/middlewares"
+	"github.com/gin-gonic/gin"
 )
 
 type RouteDesc struct {

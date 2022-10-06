@@ -1,29 +1,19 @@
 package controllers
 
 import (
-	"github.com/JeffJiang620/anyu_gin/loggers"
-	"github.com/JeffJiang620/anyu_gin/renders"
-	"github.com/JeffJiang620/anyu_gin/response"
+	"net/http"
+
+	"github.com/anyufly/gin_common/loggers"
+	"github.com/anyufly/gin_common/renders"
+	"github.com/anyufly/gin_common/response"
 	"github.com/gin-gonic/gin"
 	ginRender "github.com/gin-gonic/gin/render"
-	"net/http"
 )
-
-type ContextOption interface {
-	Apply(ctx *gin.Context)
-}
-
-func WithOption(ctx *gin.Context, opts ...ContextOption) {
-	for _, opt := range opts {
-		opt.Apply(ctx)
-	}
-}
 
 type ControllerFunc func(ctx *gin.Context) interface{}
 
 func ControllerHandler(controllerFunc ControllerFunc) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-
 		data := controllerFunc(ctx)
 
 		switch r := data.(type) {
