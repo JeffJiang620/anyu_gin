@@ -18,35 +18,6 @@ type Option interface {
 	Apply(*Server) error
 }
 
-var supportedMode = []string{
-	gin.DebugMode,
-	gin.ReleaseMode,
-	gin.TestMode,
-}
-
-var errNotSupportedMode = errors.New("mode not supported")
-
-func checkModeSupported(mode string) bool {
-	for _, sm := range supportedMode {
-		if mode == sm {
-			return true
-		}
-	}
-
-	return false
-}
-
-type Mode string
-
-func (opt Mode) Apply(server *Server) error {
-	sMode := string(opt)
-	if !checkModeSupported(sMode) {
-		return errNotSupportedMode
-	}
-	gin.SetMode(sMode)
-	return nil
-}
-
 type Logger struct {
 	LoggerHandler gin.HandlerFunc
 }

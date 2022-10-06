@@ -12,7 +12,8 @@ type Server struct {
 	engine *gin.Engine
 }
 
-func NewServer() *Server {
+func NewServer(mode string) *Server {
+	gin.SetMode(mode)
 	return &Server{
 		engine: gin.New(),
 	}
