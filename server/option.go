@@ -2,6 +2,7 @@ package server
 
 import (
 	"errors"
+	"strings"
 	"time"
 
 	"github.com/anyufly/gin_common/routers"
@@ -65,20 +66,26 @@ func (opt Recover) Apply(server *Server) error {
 }
 
 type Cors struct {
-	AllowOrigins     []string
-	AllowMethods     []string
-	AllowHeaders     []string
+	AllowOrigins     string
+	AllowMethods     string
+	AllowHeaders     string
 	AllowCredentials bool
-	MaxAge           time.Duration
+	MaxAge           int
 }
 
 func (opt Cors) Apply(server *Server) error {
+
+	allowOrigins := strings.Split(opt.AllowOrigins, ",")
+	allowMethods := strings.Split(opt.AllowMethods, ",")
+	allowHeaders := strings.Split(opt.AllowHeaders, ",")
+	maxAge := time.Duration(opt.MaxAge) * time.Minute
+
 	c := cors.Config{
-		AllowOrigins:     opt.AllowOrigins,
-		AllowMethods:     opt.AllowMethods,
-		AllowHeaders:     opt.AllowHeaders,
+		AllowOrigins:     allowOrigins,
+		AllowMethods:     allowMethods,
+		AllowHeaders:     allowHeaders,
 		AllowCredentials: opt.AllowCredentials,
-		MaxAge:           opt.MaxAge,
+		MaxAge:           maxAge,
 	}
 	server.engine.Use(cors.New(c))
 	return nil
