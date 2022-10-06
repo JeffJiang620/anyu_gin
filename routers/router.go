@@ -6,6 +6,7 @@ import (
 	"strings"
 	"unsafe"
 
+	"github.com/anyufly/gin_common/common"
 	"github.com/anyufly/gin_common/controllers"
 	"github.com/anyufly/gin_common/middlewares"
 	"github.com/gin-gonic/gin"
@@ -59,7 +60,7 @@ type RequestFunc func(group *gin.RouterGroup, relativePath string, handlers ...g
 func addRouterFullPath(basePath string, relativePath string) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		reqCtx := ctx.Request.Context()
-		valCtx := context.WithValue(reqCtx, "router_path", calculateAbsolutePath(basePath, relativePath))
+		valCtx := context.WithValue(reqCtx, common.ContextKey("router_path"), calculateAbsolutePath(basePath, relativePath))
 		ctx.Request = ctx.Request.WithContext(valCtx)
 	}
 }

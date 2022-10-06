@@ -30,30 +30,30 @@ func processMiddlewareFunc(phase int, middleware IMiddleWare, ctx *gin.Context) 
 	default:
 		panic(ErrInvalidPhase)
 	}
-	if processFunc != nil {
-		data := processFunc(ctx)
 
-		switch r := data.(type) {
-		case renders.ErrorRender:
-			err := r.Err()
-			loggers.LogRequestErr(ctx, err)
-			if allow {
-				r.Render(ctx)
-				ctx.Abort()
-				return
-			}
-		case error:
-			loggers.LogRequestErr(ctx, r)
-			if allow {
-				er := response.UnknownError.WithErr(r)
-				er.Render(ctx)
-				ctx.Abort()
-				return
-			}
-		default:
-			panic(ErrUnsupportedMiddlewareReturnType)
+	data := processFunc(ctx)
+
+	switch r := data.(type) {
+	case renders.ErrorRender:
+		err := r.Err()
+		loggers.LogRequestErr(ctx, err)
+		if allow {
+			r.Render(ctx)
+			ctx.Abort()
+			return
 		}
+	case error:
+		loggers.LogRequestErr(ctx, r)
+		if allow {
+			er := response.UnknownError.WithErr(r)
+			er.Render(ctx)
+			ctx.Abort()
+			return
+		}
+	default:
+		panic(ErrUnsupportedMiddlewareReturnType)
 	}
+
 	goOn = true
 	return
 }
@@ -65,8 +65,6 @@ func MiddlewareHandler(middleware IMiddleWare) gin.HandlerFunc {
 		}
 		context.Next()
 
-		if ok := processMiddlewareFunc(phaseAfter, middleware, context); !ok {
-			return
-		}
+		processMiddlewareFunc(phaseAfter, middleware, context)
 	}
 }

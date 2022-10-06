@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/anyufly/logger/loggers"
-	"github.com/anyufly/stack_err/stackErr"
+	"github.com/anyufly/stack_err/stackerr"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
@@ -14,7 +14,7 @@ func LogRequestErr(context *gin.Context, err error) {
 	ip := context.ClientIP()
 	method := context.Request.Method
 
-	if e, ok := err.(stackErr.ErrorWithStack); ok {
+	if e, ok := err.(stackerr.ErrorWithStack); ok {
 		loggers.Logger.Name("request_error").Error("",
 			zap.String("ip", ip),
 			zap.String("method", method),

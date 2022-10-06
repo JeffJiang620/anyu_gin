@@ -3,9 +3,10 @@ package response
 import (
 	"net/http"
 
+	"github.com/anyufly/gin_common/apierr"
 	"github.com/anyufly/gin_common/renders"
 	"github.com/anyufly/gin_common/trans"
-	"github.com/anyufly/stack_err/stackErr"
+	"github.com/anyufly/stack_err/stackerr"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 )
@@ -40,7 +41,7 @@ func (er *ErrorResponse) WithErr(err error) renders.ErrorRender {
 	c.err = err
 
 	switch e := err.(type) {
-	case stackErr.ErrorWithStack:
+	case stackerr.ErrorWithStack:
 		c.realErr = e.Unwrap()
 	default:
 		c.realErr = err
@@ -62,6 +63,10 @@ func (er *ErrorResponse) Render(ctx *gin.Context) {
 			data[fe.Field()] = errMsg
 		}
 		er.Data = data
+	}
+
+	if ae, ok := er.realErr.(*apierr.APIError); ok {
+		er.Code = ae.Code()
 	}
 
 	if gin.IsDebugging() {
@@ -92,6 +97,13 @@ func (er *ErrorResponse) WithData(data interface{}) renders.ErrorRender {
 func (er *ErrorResponse) WithStatusCode(statusCode int) renders.ErrorRender {
 	cer := er.clone()
 	resp := cer.Response.WithStatusCode(statusCode)
+	cer.Response = resp
+	return cer
+}
+
+func (er *ErrorResponse) WithCode(code string) renders.ErrorRender {
+	cer := er.clone()
+	resp := cer.Response.WithCode(code)
 	cer.Response = resp
 	return cer
 }

@@ -6,7 +6,7 @@ import (
 
 func GetRouterPath(ctx *gin.Context) string {
 	reqCtx := ctx.Request.Context()
-	value := reqCtx.Value("router_path")
+	value := reqCtx.Value(ContextKey("router_path"))
 	routerPath, ok := value.(string)
 	if !ok {
 		return ""

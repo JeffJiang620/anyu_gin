@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/anyufly/logger v0.0.0-20221006043711-4c117a92ced9
-	github.com/anyufly/stack_err v0.0.0-20221006043430-89c439669fbc
+	github.com/anyufly/stack_err v0.0.0-20221006050244-4268cdb0591b
 	github.com/gin-gonic/gin v1.8.1
 	github.com/go-playground/locales v0.14.0
 	github.com/go-playground/universal-translator v0.18.0

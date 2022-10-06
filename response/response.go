@@ -49,6 +49,12 @@ func (resp *Response) WithStatusCode(statusCode int) *Response {
 	return c
 }
 
+func (resp *Response) WithCode(code string) *Response {
+	c := resp.clone()
+	c.Code = code
+	return c
+}
+
 const (
 	SuccessCode = "Success"
 	SuccessMsg  = "成功"

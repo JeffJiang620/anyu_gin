@@ -2,6 +2,8 @@ github.com/anyufly/logger v0.0.0-20221006043711-4c117a92ced9 h1:uMWP+OEt9Rw2XPvw
 github.com/anyufly/logger v0.0.0-20221006043711-4c117a92ced9/go.mod h1:nnFHR1COhBcss0hVzo/zQxZahSUay+3byyUWfzL94+E=
 github.com/anyufly/stack_err v0.0.0-20221006043430-89c439669fbc h1:a4LxzaP64CSc90aQqaZ09k0eBrWLxrC9mqNVuLo8C10=
 github.com/anyufly/stack_err v0.0.0-20221006043430-89c439669fbc/go.mod h1:MBdCg0g1KPbL9sVIIw9ocVGKpqspiq823sk8Dx4rY/Y=
+github.com/anyufly/stack_err v0.0.0-20221006050244-4268cdb0591b h1:FbKZkZC884eNziBGbkPTGJR1B/umqo5vwrIdUECAUvI=
+github.com/anyufly/stack_err v0.0.0-20221006050244-4268cdb0591b/go.mod h1:MBdCg0g1KPbL9sVIIw9ocVGKpqspiq823sk8Dx4rY/Y=
 github.com/benbjohnson/clock v1.1.0 h1:Q92kusRqC1XV2MjkWETPvjJVqKetz1OzxZB7mHJLju8=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
