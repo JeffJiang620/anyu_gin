@@ -121,3 +121,13 @@ func (opt SwaggerEnable) Apply(server *Server) error {
 	}
 	return nil
 }
+
+type Middlewares []gin.HandlerFunc
+
+func (m Middlewares) Apply(server *Server) error {
+	for _, handler := range m {
+		server.Engine().Use(handler)
+	}
+
+	return nil
+}
