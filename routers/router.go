@@ -14,7 +14,7 @@ import (
 
 type RouteDesc struct {
 	Method     string
-	MiddleWare []middlewares.IMiddleWare
+	MiddleWare []interface{}
 	Controller []controllers.ControllerFunc
 }
 
@@ -107,9 +107,20 @@ func handleGroupConfigs(group *gin.RouterGroup, groupConfigs map[string][]RouteD
 			for _, middleware := range routeDesc.MiddleWare {
 				mp := (*int)(unsafe.Pointer(&middleware))
 				if _, ok := middlewareFlag[*mp]; !ok {
-					if _, alreadyUse := alreadyUseMiddlewareFlag[int(*mp)]; !alreadyUse {
+					if _, alreadyUse := alreadyUseMiddlewareFlag[*mp]; !alreadyUse {
 						middlewareFlag[*mp] = true
-						controllerHandlers = append(controllerHandlers, middlewares.MiddlewareHandler(middleware))
+						switch middleware.(type) {
+						case middlewares.IMiddleWare:
+							controllerHandlers = append(controllerHandlers,
+								middlewares.MiddlewareHandler(middleware.(middlewares.IMiddleWare)))
+						case middlewares.MiddlewareFunc:
+							fn := middleware.(middlewares.MiddlewareFunc)
+							mid := fn()
+							controllerHandlers = append(controllerHandlers, middlewares.MiddlewareHandler(mid))
+						default:
+
+						}
+
 					}
 				}
 			}

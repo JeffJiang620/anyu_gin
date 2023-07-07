@@ -8,3 +8,5 @@ type IMiddleWare interface {
 	DeniedBeforeAbortContext() bool
 	AllowAfterAbortContext() bool
 }
+
+type MiddlewareFunc func() IMiddleWare
