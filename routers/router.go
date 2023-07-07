@@ -21,7 +21,7 @@ type RouteDesc struct {
 type Router interface {
 	GroupName() string
 	GroupConfig() map[string][]RouteDesc
-	GroupMiddleware() []middlewares.IMiddleWare
+	GroupMiddleware() []interface{}
 }
 
 func handleRouter(version *gin.RouterGroup, router Router) {
@@ -33,14 +33,26 @@ func handleRouter(version *gin.RouterGroup, router Router) {
 	handleGroupConfigs(group, groupConfigs, middlewareFlag)
 }
 
-func handleGroupMiddleware(group *gin.RouterGroup, midList ...middlewares.IMiddleWare) map[int]bool {
+func handleGroupMiddleware(group *gin.RouterGroup, midList ...interface{}) map[int]bool {
 	var middlewareHandlers []gin.HandlerFunc
 	var middlewareFlag = make(map[int]bool)
 	for _, middleware := range midList {
 		mp := (*int)(unsafe.Pointer(&middleware))
 		if _, ok := middlewareFlag[*mp]; !ok {
 			middlewareFlag[*mp] = true
-			middlewareHandlers = append(middlewareHandlers, middlewares.MiddlewareHandler(middleware))
+
+			switch middleware.(type) {
+			case middlewares.IMiddleWare:
+				middlewareHandlers = append(middlewareHandlers,
+					middlewares.MiddlewareHandler(middleware.(middlewares.IMiddleWare)))
+			case middlewares.MiddlewareFunc:
+				fn := middleware.(middlewares.MiddlewareFunc)
+				mid := fn()
+				middlewareHandlers = append(middlewareHandlers,
+					middlewares.MiddlewareHandler(mid))
+			default:
+
+			}
 		}
 	}
 	group.Use(middlewareHandlers...)
