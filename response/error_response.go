@@ -1,6 +1,7 @@
 package response
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/anyufly/gin_common/apierr"
@@ -27,6 +28,8 @@ func NewErrorResponse(statusCode int, code string, msg string) *ErrorResponse {
 
 	return &ErrorResponse{
 		Response: resp,
+		err:      errors.New(""),
+		realErr:  errors.New(""),
 	}
 }
 
