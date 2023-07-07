@@ -26,6 +26,6 @@ func LogRequestErr(context *gin.Context, err error) {
 			zap.String("ip", ip),
 			zap.String("method", method),
 			zap.String("path", path),
-			zap.String("errMsg", e.Error()))
+			zap.String("errMsg", err.Error()))
 	}
 }
