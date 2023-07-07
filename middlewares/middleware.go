@@ -2,6 +2,8 @@ package middlewares
 
 import (
 	"errors"
+	ginRender "github.com/gin-gonic/gin/render"
+	"net/http"
 
 	"github.com/anyufly/gin_common/loggers"
 	"github.com/anyufly/gin_common/renders"
@@ -44,6 +46,10 @@ func processMiddlewareFunc(phase int, middleware IMiddleWare, ctx *gin.Context) 
 			ctx.Abort()
 			return
 		}
+	case renders.Render:
+		r.Render(ctx)
+	case ginRender.Render:
+		ctx.Render(http.StatusOK, r)
 	case error:
 		loggers.LogRequestErr(ctx, r)
 		if allow {
