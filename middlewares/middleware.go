@@ -14,7 +14,6 @@ const (
 	phaseAfter  = 2
 )
 
-var ErrInvalidPhase = errors.New("invalid phase")
 var ErrUnsupportedMiddlewareReturnType = errors.New("unsupported middleware return type")
 
 func processMiddlewareFunc(phase int, middleware IMiddleWare, ctx *gin.Context) (goOn bool) {
@@ -27,8 +26,6 @@ func processMiddlewareFunc(phase int, middleware IMiddleWare, ctx *gin.Context) 
 	case phaseAfter:
 		processFunc = middleware.After
 		allow = middleware.AllowAfterAbortContext()
-	default:
-		panic(ErrInvalidPhase)
 	}
 
 	data := processFunc(ctx)
