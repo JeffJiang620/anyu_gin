@@ -15,7 +15,7 @@ const (
 )
 
 var ErrInvalidPhase = errors.New("invalid phase")
-var ErrUnsupportedMiddlewareReturnType = errors.New("")
+var ErrUnsupportedMiddlewareReturnType = errors.New("unsupported middleware return type")
 
 func processMiddlewareFunc(phase int, middleware IMiddleWare, ctx *gin.Context) (goOn bool) {
 	var allow bool
@@ -32,6 +32,11 @@ func processMiddlewareFunc(phase int, middleware IMiddleWare, ctx *gin.Context) 
 	}
 
 	data := processFunc(ctx)
+
+	if data == nil {
+		goOn = true
+		return
+	}
 
 	switch r := data.(type) {
 	case renders.ErrorRender:
