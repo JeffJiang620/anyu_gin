@@ -47,9 +47,18 @@ func processMiddlewareFunc(phase int, middleware IMiddleWare, ctx *gin.Context) 
 			return
 		}
 	case renders.Render:
-		r.Render(ctx)
+		if allow {
+			r.Render(ctx)
+			ctx.Abort()
+			return
+		}
+
 	case ginRender.Render:
-		ctx.Render(http.StatusOK, r)
+		if allow {
+			ctx.Render(http.StatusOK, r)
+			ctx.Abort()
+			return
+		}
 	case error:
 		loggers.LogRequestErr(ctx, r)
 		if allow {
