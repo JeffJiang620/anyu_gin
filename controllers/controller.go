@@ -25,6 +25,7 @@ func ControllerHandler(controllerFunc ControllerFunc) gin.HandlerFunc {
 		case ginRender.Render:
 			ctx.Render(http.StatusOK, r)
 		case error:
+			loggers.LogRequestErr(ctx, r)
 			er := response.UnknownError.WithErr(r)
 			er.Render(ctx)
 		default:
