@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"github.com/anyufly/gin_common/loggers"
 	"net"
 	"net/http/httputil"
 	"os"
@@ -12,9 +13,7 @@ import (
 	"time"
 
 	"github.com/anyufly/gin_common/response"
-	"github.com/anyufly/logger/loggers"
 	"github.com/gin-gonic/gin"
-	"go.uber.org/zap"
 )
 
 var (
@@ -135,11 +134,15 @@ func Recovery() gin.HandlerFunc {
 				path := c.Request.URL.Path
 				ip := c.ClientIP()
 				method := c.Request.Method
-				loggers.Logger.Name("request_panic").Error("",
-					zap.String("ip", ip),
-					zap.String("method", method),
-					zap.String("path", path),
-					zap.String("errMsg", errLog))
+				logger := loggers.Default(c)
+
+				if logger != nil {
+					logger.Name("request_panic").Error("",
+						"ip", ip,
+						"method", method,
+						"path", path,
+						"errMsg", errLog)
+				}
 				c.Abort()
 			}
 		}()

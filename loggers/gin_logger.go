@@ -4,17 +4,27 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/anyufly/logger/loggers"
 	"github.com/gin-gonic/gin"
-	"go.uber.org/zap"
 )
 
+type GinLogger interface {
+	Name(name string) GinLogger
+	Info(msg string, keyAndValues ...interface{})
+	Debug(msg string, keyAndValues ...interface{})
+	Warn(msg string, keyAndValues ...interface{})
+	Error(msg string, keyAndValues ...interface{})
+}
+
+const loggerKey = "_gin_logger"
+
 type LoggerConfig struct {
+	Logger    GinLogger
 	SkipPaths []string
 }
 
-func Logger(notLogged ...string) gin.HandlerFunc {
+func Logger(logger GinLogger, notLogged ...string) gin.HandlerFunc {
 	return LoggerWithConfig(LoggerConfig{
+		Logger:    logger,
 		SkipPaths: notLogged,
 	})
 }
@@ -33,6 +43,7 @@ func LoggerWithConfig(conf LoggerConfig) gin.HandlerFunc {
 	}
 
 	return func(c *gin.Context) {
+		c.Set(loggerKey, conf.Logger)
 		// Start time
 		start := time.Now()
 		path := c.Request.URL.Path
@@ -59,15 +70,26 @@ func LoggerWithConfig(conf LoggerConfig) gin.HandlerFunc {
 			}
 
 			param.Path = path
-			loggers.Logger.Name("gin_logger").Info("",
-				zap.String("ip", param.ClientIP),
-				zap.String("proto", param.Request.Proto),
-				zap.String("method", param.Method),
-				zap.String("path", param.Path),
-				zap.Int("status_code", param.StatusCode),
-				zap.String("cost", fmt.Sprintf("%dms", param.Latency.Milliseconds())),
-				zap.String("errMsg", param.ErrorMessage),
-				zap.String("logType", "request"))
+
+			conf.Logger.Info("",
+				"ip", param.ClientIP,
+				"proto", param.Request.Proto,
+				"method", param.Method,
+				"path", param.Path,
+				"status_code", param.StatusCode,
+				"cost", fmt.Sprintf("%d ms", param.Latency.Milliseconds()),
+				"errMsg", param.ErrorMessage,
+				"logType", "request")
 		}
 	}
+}
+
+func Default(ctx *gin.Context) GinLogger {
+	logger, ok := ctx.Get(loggerKey)
+
+	if !ok {
+		return nil
+	}
+
+	return logger.(GinLogger)
 }
