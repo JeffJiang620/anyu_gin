@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"github.com/anyufly/gin_common/apierr"
 	"github.com/go-playground/validator/v10"
 	"net/http"
 
@@ -28,6 +29,9 @@ func ControllerHandler(controllerFunc ControllerFunc) gin.HandlerFunc {
 		case validator.ValidationErrors:
 			er := response.ParameterError.WithErr(r)
 			er.Render(ctx)
+		case *apierr.APIError:
+			er := &response.ErrorResponse{}
+			er.WithStatusCode(http.StatusOK).WithErr(r).Render(ctx)
 		case error:
 			loggers.LogRequestErr(ctx, r)
 			er := response.UnknownError.WithErr(r)

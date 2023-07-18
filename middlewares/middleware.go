@@ -2,6 +2,7 @@ package middlewares
 
 import (
 	"errors"
+	"github.com/anyufly/gin_common/apierr"
 	ginRender "github.com/gin-gonic/gin/render"
 	"github.com/go-playground/validator/v10"
 	"net/http"
@@ -64,6 +65,13 @@ func processMiddlewareFunc(phase int, middleware IMiddleWare, ctx *gin.Context) 
 		if allow {
 			er := response.ParameterError.WithErr(r)
 			er.Render(ctx)
+			ctx.Abort()
+			return
+		}
+	case *apierr.APIError:
+		if allow {
+			er := &response.ErrorResponse{}
+			er.WithStatusCode(http.StatusOK).WithErr(r).Render(ctx)
 			ctx.Abort()
 			return
 		}
