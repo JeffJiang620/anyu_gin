@@ -61,10 +61,12 @@ func processMiddlewareFunc(phase int, middleware IMiddleWare, ctx *gin.Context) 
 			return
 		}
 	case validator.ValidationErrors:
-		er := response.ParameterError.WithErr(r)
-		er.Render(ctx)
-		ctx.Abort()
-		return
+		if allow {
+			er := response.ParameterError.WithErr(r)
+			er.Render(ctx)
+			ctx.Abort()
+			return
+		}
 	case error:
 		loggers.LogRequestErr(ctx, r)
 		if allow {
