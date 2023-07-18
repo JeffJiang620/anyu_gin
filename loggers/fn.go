@@ -27,7 +27,7 @@ func LogRequestErr(context *gin.Context, err error) {
 				"ip", ip,
 				"method", method,
 				"path", path,
-				"errMsg", e.Error())
+				"errMsg", err.Error())
 		}
 	}
 
