@@ -1,7 +1,5 @@
 github.com/KyleBanks/depth v1.2.1 h1:5h8fQADFrWtarTdtDudMmGsC7GPbOAu6RVB3ffsVFHc=
 github.com/KyleBanks/depth v1.2.1/go.mod h1:jzSb9d0L43HxTQfT+oSA1EEp2q+ne2uh6XgeJcm8brE=
-github.com/anyufly/logger v0.0.0-20221006043711-4c117a92ced9 h1:uMWP+OEt9Rw2XPvwJUqbhMuAgV60KuaVyX96bWpzItA=
-github.com/anyufly/logger v0.0.0-20221006043711-4c117a92ced9/go.mod h1:nnFHR1COhBcss0hVzo/zQxZahSUay+3byyUWfzL94+E=
 github.com/anyufly/logger v0.0.0-20230707081545-a853708f88d8 h1:029IpRKqhmZTqYnTI17Xrvb7cYyxHHmumhi1/udcPJc=
 github.com/anyufly/logger v0.0.0-20230707081545-a853708f88d8/go.mod h1:99zeqRTGtWgzOWAcrJ6ETRJwsybyKV3woiRKAXlbClY=
 github.com/anyufly/stack_err v0.0.0-20221006050244-4268cdb0591b h1:FbKZkZC884eNziBGbkPTGJR1B/umqo5vwrIdUECAUvI=
