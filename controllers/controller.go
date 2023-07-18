@@ -34,8 +34,10 @@ func ControllerHandler(controllerFunc ControllerFunc) gin.HandlerFunc {
 			loggers.LogRequestErr(ctx, r)
 			response.UnknownError.WithErr(r).Render(ctx)
 		default:
-			cr := renders.JSON{Data: data}
-			ctx.Render(http.StatusOK, cr)
+			if data != nil {
+				cr := renders.JSON{Data: data}
+				ctx.Render(http.StatusOK, cr)
+			}
 		}
 	}
 
