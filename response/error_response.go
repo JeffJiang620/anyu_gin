@@ -115,3 +115,4 @@ func (er *ErrorResponse) WithCode(code string) *ErrorResponse {
 }
 
 var UnknownError = NewErrorResponse(http.StatusInternalServerError, "UnknownError", "未知错误")
+var ParameterError = NewErrorResponse(http.StatusBadRequest, "ParameterError", "参数错误")

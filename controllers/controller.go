@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"github.com/go-playground/validator/v10"
 	"net/http"
 
 	"github.com/anyufly/gin_common/loggers"
@@ -24,6 +25,9 @@ func ControllerHandler(controllerFunc ControllerFunc) gin.HandlerFunc {
 			r.Render(ctx)
 		case ginRender.Render:
 			ctx.Render(http.StatusOK, r)
+		case validator.ValidationErrors:
+			er := response.ParameterError.WithErr(r)
+			er.Render(ctx)
 		case error:
 			loggers.LogRequestErr(ctx, r)
 			er := response.UnknownError.WithErr(r)

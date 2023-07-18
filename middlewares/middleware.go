@@ -3,6 +3,7 @@ package middlewares
 import (
 	"errors"
 	ginRender "github.com/gin-gonic/gin/render"
+	"github.com/go-playground/validator/v10"
 	"net/http"
 
 	"github.com/anyufly/gin_common/loggers"
@@ -59,6 +60,11 @@ func processMiddlewareFunc(phase int, middleware IMiddleWare, ctx *gin.Context) 
 			ctx.Abort()
 			return
 		}
+	case validator.ValidationErrors:
+		er := response.ParameterError.WithErr(r)
+		er.Render(ctx)
+		ctx.Abort()
+		return
 	case error:
 		loggers.LogRequestErr(ctx, r)
 		if allow {
