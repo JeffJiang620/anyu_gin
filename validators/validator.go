@@ -16,7 +16,7 @@ import (
 )
 
 type Validator interface {
-	FailedText() string
+	FailedText(locale string) string
 	CallValidationEvenIfNull() bool
 	TagName() string
 	Validate(fl validator.FieldLevel) bool
@@ -54,6 +54,19 @@ func initValidateTrans(locale string, v *validator.Validate) (err error) {
 	return
 }
 
+func registerFnWrapper(vl Validator, locale string) validator.RegisterTranslationsFunc {
+	return func(ut ut.Translator) error {
+		return ut.Add(vl.TagName(), vl.FailedText(locale), true)
+	}
+}
+
+func translationFnWrapper(vl Validator) validator.TranslationFunc {
+	return func(ut ut.Translator, fe validator.FieldError) string {
+		t, _ := ut.T(vl.TagName(), fe.Field())
+		return t
+	}
+}
+
 func RegisterValidator(locale string, validators ...Validator) (err error) {
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
 		err = initValidateTrans(locale, v)
@@ -64,12 +77,7 @@ func RegisterValidator(locale string, validators ...Validator) (err error) {
 		for _, vl := range validators {
 			if vl != nil {
 				_ = v.RegisterValidation(vl.TagName(), vl.Validate, vl.CallValidationEvenIfNull())
-				_ = v.RegisterTranslation(vl.TagName(), trans.Trans(), func(ut ut.Translator) error {
-					return ut.Add(vl.TagName(), vl.FailedText(), true)
-				}, func(ut ut.Translator, fe validator.FieldError) string {
-					t, _ := ut.T(vl.TagName(), fe.Field())
-					return t
-				})
+				_ = v.RegisterTranslation(vl.TagName(), trans.Trans(), registerFnWrapper(vl, locale), translationFnWrapper(vl))
 			}
 		}
 
