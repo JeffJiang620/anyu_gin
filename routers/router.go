@@ -73,7 +73,7 @@ func addRouterFullPath(basePath string, relativePath string) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		reqCtx := ctx.Request.Context()
 		valCtx := context.WithValue(reqCtx, common.ContextKey("router_path"), calculateAbsolutePath(basePath, relativePath))
-		ctx.Request = ctx.Request.WithContext(valCtx)
+		*ctx.Request = *ctx.Request.WithContext(valCtx)
 	}
 }
 
