@@ -30,6 +30,9 @@ type ginLogger struct {
 }
 
 func New(logger *loggers.CommonLogger) GinLogger {
+	if logger == nil {
+		panic("gin logger can not be nil")
+	}
 	return &ginLogger{
 		logger: logger,
 	}

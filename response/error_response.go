@@ -70,6 +70,9 @@ func (er *ErrorResponse) Render(ctx *gin.Context) {
 
 	if ae, ok := er.realErr.(*apierr.APIError); ok {
 		er.Code = ae.Code()
+		if er.Msg == "" {
+			er.Msg = er.realErr.Error()
+		}
 	}
 
 	if gin.IsDebugging() {
@@ -83,28 +86,28 @@ func (er *ErrorResponse) Render(ctx *gin.Context) {
 	ctx.Render(er.StatusCode(), renders.JSON{Data: er})
 }
 
-func (er *ErrorResponse) WithMsg(msg string) renders.ErrorRender {
+func (er *ErrorResponse) WithMsg(msg string) *ErrorResponse {
 	cer := er.clone()
 	resp := cer.Response.WithMsg(msg)
 	cer.Response = resp
 	return cer
 }
 
-func (er *ErrorResponse) WithData(data interface{}) renders.ErrorRender {
+func (er *ErrorResponse) WithData(data interface{}) *ErrorResponse {
 	cer := er.clone()
 	resp := cer.Response.WithData(data)
 	cer.Response = resp
 	return cer
 }
 
-func (er *ErrorResponse) WithStatusCode(statusCode int) renders.ErrorRender {
+func (er *ErrorResponse) WithStatusCode(statusCode int) *ErrorResponse {
 	cer := er.clone()
 	resp := cer.Response.WithStatusCode(statusCode)
 	cer.Response = resp
 	return cer
 }
 
-func (er *ErrorResponse) WithCode(code string) renders.ErrorRender {
+func (er *ErrorResponse) WithCode(code string) *ErrorResponse {
 	cer := er.clone()
 	resp := cer.Response.WithCode(code)
 	cer.Response = resp
