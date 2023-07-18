@@ -71,7 +71,7 @@ func processMiddlewareFunc(phase int, middleware IMiddleWare, ctx *gin.Context) 
 	case *apierr.APIError:
 		if allow {
 			er := &response.ErrorResponse{}
-			er.WithStatusCode(http.StatusOK).WithErr(r).Render(ctx)
+			er.WithStatusCode(http.StatusInternalServerError).WithErr(r).Render(ctx)
 			ctx.Abort()
 			return
 		}

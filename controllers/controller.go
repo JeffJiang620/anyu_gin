@@ -31,7 +31,7 @@ func ControllerHandler(controllerFunc ControllerFunc) gin.HandlerFunc {
 			er.Render(ctx)
 		case *apierr.APIError:
 			er := &response.ErrorResponse{}
-			er.WithStatusCode(http.StatusOK).WithErr(r).Render(ctx)
+			er.WithStatusCode(http.StatusInternalServerError).WithErr(r).Render(ctx)
 		case error:
 			loggers.LogRequestErr(ctx, r)
 			er := response.UnknownError.WithErr(r)
