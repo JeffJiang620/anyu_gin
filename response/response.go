@@ -66,6 +66,14 @@ func SuccessWithData(data interface{}) *Response {
 	return SuccessResponse.WithData(data)
 }
 
+func SuccessWithMsg(msg string) *Response {
+	return SuccessResponse.WithMsg(msg)
+}
+
 func SuccessWithDataAndMsg(data interface{}, msg string) *Response {
 	return SuccessResponse.WithData(data).WithMsg(msg)
+}
+
+var Empty = &Response{
+	statusCode: http.StatusOK,
 }

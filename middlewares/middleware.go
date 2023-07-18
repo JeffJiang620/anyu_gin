@@ -63,23 +63,20 @@ func processMiddlewareFunc(phase int, middleware IMiddleWare, ctx *gin.Context) 
 		}
 	case validator.ValidationErrors:
 		if allow {
-			er := response.ParameterError.WithErr(r)
-			er.Render(ctx)
+			response.ParameterError.WithErr(r).Render(ctx)
 			ctx.Abort()
 			return
 		}
 	case *apierr.APIError:
 		if allow {
-			er := &response.ErrorResponse{}
-			er.WithStatusCode(http.StatusInternalServerError).WithErr(r).Render(ctx)
+			response.EmptyError.WithErr(r).Render(ctx)
 			ctx.Abort()
 			return
 		}
 	case error:
 		loggers.LogRequestErr(ctx, r)
 		if allow {
-			er := response.UnknownError.WithErr(r)
-			er.Render(ctx)
+			response.UnknownError.WithErr(r).Render(ctx)
 			ctx.Abort()
 			return
 		}

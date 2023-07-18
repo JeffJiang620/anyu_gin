@@ -27,15 +27,12 @@ func ControllerHandler(controllerFunc ControllerFunc) gin.HandlerFunc {
 		case ginRender.Render:
 			ctx.Render(http.StatusOK, r)
 		case validator.ValidationErrors:
-			er := response.ParameterError.WithErr(r)
-			er.Render(ctx)
+			response.ParameterError.WithErr(r).Render(ctx)
 		case *apierr.APIError:
-			er := &response.ErrorResponse{}
-			er.WithStatusCode(http.StatusInternalServerError).WithErr(r).Render(ctx)
+			response.EmptyError.WithErr(r).Render(ctx)
 		case error:
 			loggers.LogRequestErr(ctx, r)
-			er := response.UnknownError.WithErr(r)
-			er.Render(ctx)
+			response.UnknownError.WithErr(r).Render(ctx)
 		default:
 			cr := renders.JSON{Data: data}
 			ctx.Render(http.StatusOK, cr)
