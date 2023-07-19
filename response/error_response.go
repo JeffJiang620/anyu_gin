@@ -34,7 +34,9 @@ func NewErrorResponse(statusCode int, code string, msg string) *ErrorResponse {
 }
 
 func (er *ErrorResponse) clone() *ErrorResponse {
+	resp := er.Response.clone()
 	c := *er
+	c.Response = resp
 	return &c
 }
 
