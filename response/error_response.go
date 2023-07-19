@@ -90,29 +90,25 @@ func (er *ErrorResponse) Render(ctx *gin.Context) {
 
 func (er *ErrorResponse) WithMsg(msg string) *ErrorResponse {
 	cer := er.clone()
-	resp := cer.Response.WithMsg(msg)
-	cer.Response = resp
+	cer.Msg = msg
 	return cer
 }
 
 func (er *ErrorResponse) WithData(data interface{}) *ErrorResponse {
 	cer := er.clone()
-	resp := cer.Response.WithData(data)
-	cer.Response = resp
+	cer.Data = data
 	return cer
 }
 
 func (er *ErrorResponse) WithStatusCode(statusCode int) *ErrorResponse {
 	cer := er.clone()
-	resp := cer.Response.WithStatusCode(statusCode)
-	cer.Response = resp
+	cer.statusCode = statusCode
 	return cer
 }
 
 func (er *ErrorResponse) WithCode(code string) *ErrorResponse {
 	cer := er.clone()
-	resp := cer.Response.WithCode(code)
-	cer.Response = resp
+	cer.Code = code
 	return cer
 }
 
